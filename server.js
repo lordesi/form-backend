@@ -1,3 +1,11 @@
+const express = require('express');
+const cors = require('cors');
+const { Pool } = require('pg');  // <-- qui
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false }
@@ -17,3 +25,6 @@ app.post('/invia-form', async (req, res) => {
     res.status(500).send("Errore durante il salvataggio");
   }
 });
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Server avviato sulla porta ${port}`));
